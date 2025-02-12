@@ -1,10 +1,29 @@
+
+//understanding strings
 #include <iostream>
 #include<string>
 using namespace std;
 
 int main()
 {
+    /*
+    std::string is a part of c++ standard library(<string> header). 
+    It is a class that dynamically manages strings. 
+    std::string is a part of STL - there is no separate STL string.
+    */
+
+    /*
+    String literal - fixed, immutable sequence of characters stored in read-only memory(data segment).
+    It is not std::string - it's const char*(c-style string). Modifying a string literal causes undefined behaviour.
     
+    example:-
+    char* ptr = "Hello";
+    ptr[0]='M'; //turns out to be an undefined behaviour since string literals are read-only
+    cout << ptr << endl; //that'll also give error
+    corrected code:-
+    const char* ptr2 = 'hello';
+    cout << "String literal" << ptr2 <<endl;
+    */
     // string str;
     // str="sumit"; //way of declaration
     // cout<<str<<endl;
@@ -28,11 +47,11 @@ int main()
     //string s="sumit hada";
     //cout<<s[4];
     
-    //cout<<"sumit"+"hada"<<endl; //gives error
+    //cout << "sumit" + "hada" << endl; //gives error
     //solution:
     // string fname="sumit";
     // string lname=" hada";
-    // cout<<fname+lname;
+    // cout << fname + lname;
      
     return 0;
 }
