@@ -142,6 +142,20 @@ myBase(10); creates a temporary, separate base class object, but it does not ini
 Since myBase does not have a default constructor, compilation fails.
 */
 
+//========================================================================================================
+//Note: members are initialized in the order they are declared in the class, not in the order they appear in the initialization list
+class Test{
+public:
+//int _a;
+//int _b;
+//Test() : _b(10), _a(_b) {} //undefined behaviour
+
+//correct way:-
+int _b;
+int _a;
+Test() : _b(10), _a(_b) {} //undefined behaviour
+
+};
 
 int main()
 {
