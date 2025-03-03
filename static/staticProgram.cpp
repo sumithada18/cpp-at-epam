@@ -27,6 +27,20 @@ class Customer{
 };
 int Customer::total_customer = 0;
 
+//==========================================================================================================
+class Test{
+    public:
+    virtual static void fun(){};
+};
+//above class code snippet gives error when instantiated - static functions can't be virtual since virtual functions are not tied to 
+//instance of a class but the class itself. 
+
+// Also, static member function cannot be const and volatile. Following code also fails in compilation,
+class Test2{
+    public:
+    virtual static void fun() const {};
+};
+
 int main()
 {
     //not using static:-
