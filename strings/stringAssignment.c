@@ -63,5 +63,17 @@ int main()
 	    temp = strtok(NULL, "-");
 	}
 
+
+	/*
+ char str[] = "abcabcabc";
+    char* ptr = strstr(str+4, "abc");
+    if(ptr){
+     printf("%s", ptr);   
+    }
+    else{
+        printf("error");
+    }
+	*/
+
 	return 0;
 }
