@@ -33,5 +33,14 @@ int main()
 	//Null pointer: a pointer that doesn't point to any location
 	int* ptr2=NULL;
 
+	// Void pointer 
+	// a void pointer can hold address of any type 
+	void* voidPtr  = new int(100);
+	std::cout << voidPtr << "\n"; // prints address, No error
+	// dereferencing void pointer
+	std::cout << *voidPtr << "\n";	// gives error 
+	// why error ? 
+	// because a void* has no type information, so the compiler doesn't know how many bytes to read when you do *voidPtr
+	
 	return 0;
 }
