@@ -1,6 +1,28 @@
 #include <iostream>
 #include <memory>
 using namespace std;
+// ===============================================
+// Passing std::shared_ptr to functions:
+// ===============================================
+// * By value (takes ownership share)
+// * By const& (observes, doesn't affect ref count significantly)
+// * By & (if the function needs to reseat the pointer)
+
+void sptr_by_val(std::shared_ptr<int> p){
+    // Copies shared_ptr → increases use_count temporarily (copy constructor)
+    std::cout << "in sptr_by_val: " << p.use_count() << "\n";
+}
+
+void sptr_by_const_ref(const std::shared_ptr<int>& p){
+    // Observes shared_ptr without copying → use_count unchanged
+    std::cout << "in sptr_by_const_ref: " << p.use_count() << "\n";
+}
+
+void sptr_by_ref(std::shared_ptr<int>& p){
+    // Direct access to shared_ptr → can modify original, use_count unchanged
+    std::cout << "in sptr_by_ref: " << p.use_count() << "\n";
+}
+
 
 int main()
 {
@@ -105,6 +127,18 @@ int main()
 
 
     */
+
+ //============================ Passing std::shared_ptr to functions:=========================
+    std::shared_ptr<int>s_ptr = std::make_shared<int>(100); // use_count = 1
+
+// sptr_by_val(s_ptr); 
+// Copy made → use_count becomes 2 inside function → back to 1 after
+
+// sptr_by_const_ref(s_ptr);
+// No copy → just observes → use_count stays 1 throughout
+
+sptr_by_ref(s_ptr); 
+// Can reset/modify s_ptr from inside → use_count remains 1 unless manually changed
     
     return 0;
 }
