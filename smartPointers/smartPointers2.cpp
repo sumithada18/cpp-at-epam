@@ -24,6 +24,23 @@ void sptr_by_ref(std::shared_ptr<int>& p){
 }
 
 
+// ===============================================
+// Returning smart pointers from functions 
+// ===============================================
+
+std::unique_ptr<int> createUnique(int val) {
+    // Creates a unique_ptr owning a dynamically allocated int initialized with val
+    // Returned by value → compiler applies move semantics (RVO/NRVO or move)
+    return std::make_unique<int>(val);
+}
+
+std::shared_ptr<int> createShared(int val) {
+    // Creates a shared_ptr managing a dynamically allocated int with val
+    // Reference count starts at 1 → returned by value
+    return std::make_shared<int>(val);
+}
+
+
 int main()
 {
     /*
