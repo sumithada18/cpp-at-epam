@@ -29,7 +29,7 @@ int main()
     
     //shared_ptr<int>p1(new int(100));
     //weak_ptr<int>p2 = p1;
-    //cout << *p1 << " " << *(p2.lock()) << endl; //we can't derefeence a weak_ptr direstly, we must use .lock() which converts it inot a shared_ptr
+    //cout << *p1 << " " << *(p2.lock()) << endl; //we can't dereference a weak_ptr directly, we must use .lock() which converts it into a shared_ptr
     
     /*
     case1: we do p1.reset()
@@ -42,12 +42,12 @@ int main()
     /*
     case2: we do p2.reset()
     
-    cout << p2.use_count() << endl;
+    cout << p1.use_count() << endl;
     cout << p2.use_count() << endl;
     
     */
     
-    //conslusion: If we reset a shared_ptr, 
+    //conclusion: If we reset a shared_ptr, 
     //the weak_ptr loses access to the resource, but resetting a weak_ptr does not affect the shared_ptr or the resource.
     
     
