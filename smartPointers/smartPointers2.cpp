@@ -159,3 +159,15 @@ sptr_by_ref(s_ptr);
     
     return 0;
 }
+
+// ===============================================
+// Control block in a Smart pointer
+// ===============================================
+/*
+Control Block: A separate heap-allocated helper object for shared_ptr and weak_ptr.
+Contents: Stores strong count, weak count, and info to delete the managed object (like a pointer or deleter).
+Ownership: shared_ptr creates and uses it; weak_ptr only refers to it. unique_ptr does NOT use one.
+shared_ptr Role: Increments/decrements strong count. Deletes object when strong count hits 0.
+weak_ptr Role: Increments/decrements weak count. Uses control block to check object status (lock(), expired()).
+Lifetime: Control block is deleted when both strong and weak counts are 0. You cannot directly access its members.
+*/
