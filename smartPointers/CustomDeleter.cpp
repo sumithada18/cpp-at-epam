@@ -29,5 +29,45 @@ int main() {
 	// shared_ptr with custom deleter (alternative)
 	// std::shared_ptr<Demo> sptr(darr, customDeleter);
 
+
+
+	//-------------------------------------
+	// Function Pointer as Custom Deleter
+	/*
+ 	void deleteArray(Demo* d) {
+    	  delete[] d;
+	}
+	
+	std::unique_ptr<Demo, void(*)(Demo*)> uptr(new Demo[3], deleteArray);
+	std::shared_ptr<Demo> sptr(new Demo[3], deleteArray);
+ 	*/
+
+	
+	//-------------------------------------
+	// Functor (Function Object) as Custom Deleter
+	/*
+ 	struct CustomDeleter {
+    	     void operator()(Demo* d) const {
+	     delete[] d;
+   	  }
+	};
+
+ 	std::unique_ptr<Demo, CustomDeleter> uptr(new Demo[3], CustomDeleter{});
+	std::shared_ptr<Demo> sptr(new Demo[3], CustomDeleter{});
+	*/
+
+	//-------------------------------------
+	// Functor (Function Object) as Custom Deleter
+	/*
+ 	struct CustomDeleter {
+    	   void operator()(Demo* d) const {
+              delete[] d;
+    	   }
+	};
+
+	std::unique_ptr<Demo, CustomDeleter> uptr(new Demo[3], CustomDeleter{});
+	std::shared_ptr<Demo> sptr(new Demo[3], CustomDeleter{});
+
+	*/
 	return 0;
 }
