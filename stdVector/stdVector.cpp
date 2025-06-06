@@ -34,7 +34,9 @@ public:
 class Demo {
 public:
     int val;
-
+    Demo(){
+        std::cout << "default cons..\n";
+    }
     Demo(int x) : val(x) {
         std::cout << "cons. called with value: " << x << "\n";
     }
@@ -97,10 +99,10 @@ int main()
 
 
     std::vector<std::string>v;
-    v.push_back("hello"); // "hello" is a temporary value (rvalue) so move semantics (move constructor) would be invoked - moving the temporary object directly in vector's storage
+    v.push_back("hello"); // "hello" is a temporary value (rvalue), so move semantics (move constructor) would be invoked - moving the temporary object directly in vector's storage
 
     std::string str = "Hello";
-    v.push_back(str); // str is an lvalue so copy constructor or vector class would be invoked
+    v.push_back(str); // str is an lvalue, so the copy constructor of the vector class would be invoked
 
     //std::vector<myClass>vec;
     //vec.reserve(5);
@@ -109,7 +111,7 @@ int main()
 
     //std::vector<myClass>myVec;
     //myVec.reserve(5);
-    //myVec.push_back(10); // temporary object is created first then copied/moved in the vector
+    //myVec.push_back(10); // temporary object is created first, then copied/moved into the vector
     //myVec.emplace_back(20); // constructs in-place inside vector
 
 
@@ -120,8 +122,8 @@ int main()
 
     The key benefit of emplace_back is when you pass constructor arguments directly, as it constructs the object in place, avoiding extra moves or copies.
     */
-    //lets understand with an example:
-    /*
+    //let's understand with an example:
+    
     std::vector<Demo>demoVec;
     demoVec.reserve(20);
 
@@ -138,11 +140,16 @@ int main()
     demoVec.emplace_back(Demo(10));
     std::cout << std::endl;
 
-    // passing constructor argument directly:
+    // passing the constructor argument directly:
     std::cout << "passing constructor argument directly" << "\n";
     demoVec.push_back(34);
     demoVec.emplace_back(31);
-    */
+
+    // emplace back even works with the classes that requires no arguements
+    // just do :
+    demoVec.emplace_back();
+    // Directly constructs the Demo object in place inside the vector 
+    // using its default constructor. No separate temporary object is created and then moved/copied.
 
 
     // invalidation of iterators in std::vector
@@ -157,7 +164,7 @@ int main()
     intVec.push_back(20); // vector resizes here
 
     // accessing the iterator now:
-    //std::cout << *it << "\n"; // crash!!! - vector has resized and iterator is invalidated 
+    //std::cout << *it << "\n"; // crash!!! - The vector has resized, and the iterator is invalidated 
     
 
     // NOTE: Vector resizing invalidates all iterators, pointers, and references.
