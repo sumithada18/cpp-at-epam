@@ -1,0 +1,51 @@
+Interviewer: "Why would you mark a function noexcept if it can still technically throw an exception?"
+Ans:
+You mark a function noexcept as a contract with the compiler and other programmers. It provides two critical benefits:
+
+Performance Optimization: The primary reason is performance. noexcept is a promise that the function will 
+not let an exception escape its scope. The compiler trusts this promise and can generate significantly faster
+code because it doesn't need to add the complex and costly machinery for stack unwinding if an exception were to occur.
+
+Enabling Safe Move Semantics: This is crucial for working with the standard library. Containers like std::vector
+check if a type's move constructor is noexcept. If it is, the vector can safely move elements during a resize,
+which is very fast. If it's not noexcept, the vector must fall back to the slower and safer copy operation to 
+provide the strong exception guarantee. So, marking your move operations noexcept is essential for creating efficient types.
+
+The "Catch"
+
+The penalty for breaking this contract is severe. If a noexcept function does allow an exception to propagate 
+out, the program doesn't search for a catch block. Instead, it immediately calls std::terminate(), and the 
+application aborts. You are essentially trading runtime safety for performance and design clarity.
+
+//------------------------------------------------------------------------------------------------------------------------
+
+Interviewer: "How would you create a custom exception class in C++?"
+Ans:
+The best practice for creating a custom exception is to inherit from one of the standard exception classes, 
+like std::runtime_error or std::logic_error. This ensures your exception integrates cleanly with standard 
+error-handling mechanisms.
+
+There are two key steps:
+
+1. Inherit from a suitable base class, such as std::runtime_error.
+2. Create a constructor that accepts an error message and passes it up to the base class's constructor.
+
+This automatically provides your class with the what() method, which users can call to get the error message.
+
+Here is a minimal, complete example:
+Generated cpp
+#include <stdexcept> // For std::runtime_error
+#include <string>
+
+// 1. Inherit from a standard exception class
+class MyFileError : public std::runtime_error {
+public:
+    // 2. Create a constructor to pass the message to the base class
+    explicit MyFileError(const std::string& message)
+        : std::runtime_error(message) {}
+};
+
+Why do it this way?
+By inheriting from std::runtime_error, my custom MyFileError can be caught not only by 
+catch (const MyFileError& e) but also by a more general handler like catch (const std::runtime_error& e)
+or catch (const std::exception& e). This makes the error-handling code much more flexible and robust.
